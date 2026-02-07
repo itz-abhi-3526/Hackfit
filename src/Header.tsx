@@ -24,17 +24,15 @@ export const Header: React.FC = () => {
   ];
 
   return (
-    <header className="relative min-h-[80vh] text-white overflow-hidden min-w-[100%]">
+    <header className="relative min-h-[80vh] text-white overflow-hidden min-w-full">
       {/* Resizable Navbar */}
       <Navbar className="top-0 bg-black">
         <NavBody>
           <a
             href="#"
-            className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-3xl font-bold text-lime-400 font-[progress] sm:text-xl sm:inline"
+            className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-3xl font-bold text-lime-400 font-[progress]"
           >
-            <span className="font-bold text-3xl text-lime-400 sm:text-xl">
-              HACKFIT
-            </span>
+            <span className="font-bold text-3xl text-lime-400">HACKFIT</span>
           </a>
           <NavItems
             items={navItems}
@@ -54,21 +52,16 @@ export const Header: React.FC = () => {
           <MobileNavHeader>
             <a
               href="#"
-              className="relative z-20 flex items-center space-x-2 px-2 py-1 text-xl font-normal text-lime-400 font-[progress] sm:inline"
+              className="relative z-20 flex items-center space-x-2 px-2 py-1 text-xl font-normal text-lime-400 font-[progress]"
             >
-              <span className="font-bold text-xl text-lime-400 sm:text-sm">
-                HACKFIT
-              </span>
+              <span className="font-bold text-xl text-lime-400">HACKFIT</span>
             </a>
             <MobileNavToggle
               isOpen={mobileOpen}
               onClick={() => setMobileOpen(!mobileOpen)}
             />
           </MobileNavHeader>
-          <MobileNavMenu
-            isOpen={mobileOpen}
-            onClose={() => setMobileOpen(false)}
-          >
+          <MobileNavMenu isOpen={mobileOpen}>
             {navItems.map((item, idx) => (
               <a
                 key={idx}
@@ -101,31 +94,33 @@ export const Header: React.FC = () => {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-[100vh] py-20 pt-40">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen py-20 pt-40">
         {/* Centered HACKFIT Title */}
-        <h1 className="lg:text-[120px] sm:text-xl font-bold mb-8 font-[progress] leading-tight flex flex-wrap items-center justify-center gap-1">
-          <GradientText
-            colors={["#93cd2d", "#d4e21c", "#e1ce10", "#93cd2d"]}
-            animationSpeed={3}
-            showBorder={false}
-            className="text-[120px]"
-            yoyo={true}
-            pauseOnHover={true}
-          >
-            HACK
-          </GradientText>
-          <GradientText
-            colors={["#1b759f", "#8cb798", "#32bbd2"]}
-            animationSpeed={3}
-            showBorder={false}
-            className="text-[120px]"
-            pauseOnHover={true}
-          >
-            FIT
-          </GradientText>
-          <span className="font-[paladins] flex m-0 text-lime-400 mt-[20px] palette-text text-[110px]">
-            4.0
-          </span>
+        <h1 className="text-[80px] font-bold mb-8 font-[progress] leading-tight flex flex-wrap items-center justify-center gap-1 sm:text-[10px] sm:flex-row sm:gap-2">
+          <div className="flex items-center gap-2">
+            <GradientText
+              colors={["#93cd2d", "#d4e21c", "#e1ce10", "#93cd2d"]}
+              animationSpeed={3}
+              showBorder={false}
+              className="lg:text-[180px] sm:text-[10px]"
+              yoyo={true}
+              pauseOnHover={true}
+            >
+              HACK
+            </GradientText>
+            <GradientText
+              colors={["#1b759f", "#8cb798", "#32bbd2"]}
+              animationSpeed={3}
+              showBorder={false}
+              className="lg:text-[180px] sm:text-[10px]"
+              pauseOnHover={true}
+            >
+              FIT
+            </GradientText>
+            <span className="font-[paladins] flex m-0 text-lime-400 mt-5 palette-text lg:text-[110px] sm:text-[35px]">
+              4.0
+            </span>
+          </div>
         </h1>
 
         {/* Prize Pool & Dates – Hero Highlights */}

@@ -282,4 +282,20 @@ body {
   .text-black {
     color: #34bbd1;
   }
+
+  @theme inline {
+    /* Add your theme-specific styles here */
+  }
+  .border-border {
+    border-color: var(--border-color);
+  }
+  .outline-ring\/50 {
+    outline-color: rgba(var(--ring-color), 0.5);
+  }
+  .bg-background {
+    background-color: var(--background-color);
+  }
+  .text-foreground {
+    color: var(--foreground-color);
+  }
 }

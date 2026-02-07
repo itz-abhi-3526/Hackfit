@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect, useRef, ReactNode } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import type { ReactNode } from "react";
 import {
   motion,
   useMotionValue,
@@ -112,17 +113,17 @@ export default function GradientText({
 
   return (
     <motion.div
-      className={`relative inline-flex max-w-fit flex-row items-center justify-center rounded-[1.25rem] font-medium transition-shadow duration-500 overflow-hidden cursor-pointer ${showBorder ? "py-1 px-2 backdrop-blur" : ""} ${className}`}
+      className={`relative inline-flex max-w-fit flex-row items-center justify-center rounded-4xl font-medium transition-shadow duration-500 overflow-hidden cursor-pointer ${showBorder ? "py-1 px-2 backdrop-blur" : ""} ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {showBorder && (
         <motion.div
-          className="absolute inset-0 z-0 pointer-events-none rounded-[1.25rem]"
+          className="absolute inset-0 z-0 pointer-events-none rounded-4xl"
           style={{ ...gradientStyle, backgroundPosition }}
         >
           <div
-            className="absolute bg-black rounded-[1.25rem] z-[-1]       "
+            className="absolute bg-black rounded-4xl z-[-1]       "
             style={{
               width: "calc(100% - 2px)",
               height: "calc(100% - 2px)",
