@@ -1,6 +1,7 @@
 import HackathonCards from "./HackathonCards";
 import { Header } from "./Header";
-
+import Footer from "./components/Footer";
+import ContactSection from "./components/ContactSection";
 export default function App() {
   return (
     <div className="bg-black text-white min-h-screen w-full">
@@ -10,6 +11,8 @@ export default function App() {
       <section className="flex justify-center px-6 py-16 bg-black">
         <HackathonCards />
       </section>
+      <ContactSection />
+      <Footer />
     </div>
   );
 }
