@@ -183,6 +183,9 @@ export const Header: React.FC = () => {
 
         {/* Info Grid */}
       </div>
+
+      {/* Black overlay to hide UnicornStudio watermark */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 h-16 md:h-20 bg-black" />
     </header>
   );
 };
