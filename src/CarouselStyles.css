@@ -10,9 +10,27 @@
   border: 2px solid transparent;
   /* Using border-image for the gradient border */
   border-image: linear-gradient(135deg, #93cd2d, #32bbd2) 1;
-  /* The angled shape */
-  clip-path: polygon(5% 0%, 100% 0%, 100% 90%, 95% 100%, 0% 100%, 0% 10%);
+  /* Angular shape similar to HackathonCards - top-left cut corner with stepped top edge */
+  clip-path: polygon(2% 2%, 35% 2%, 40% 8%, 98% 8%, 98% 98%, 2% 98%);
   box-shadow: 0 0 30px rgba(50, 187, 210, 0.1);
+}
+
+/* Wrapper for the glowing border effect behind the neon-container */
+.neon-container-wrapper {
+  position: relative;
+  padding-top: 24px;
+}
+
+.neon-container-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 8px;
+  width: calc(100% - 16px);
+  height: 30px;
+  background: linear-gradient(135deg, #84cc16 0%, #a3e635 30%, #22d3ee 100%);
+  border-radius: 0px 5px 0px 0px;
+  z-index: 0;
 }
 
 .circuit-bg-pattern {
@@ -169,14 +187,30 @@
       #84cc16 100%
     )
     1;
-  border-radius: 1rem;
   position: relative;
+}
+
+.combined-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(
+    135deg,
+    #84cc16 0%,
+    #a3e635 30%,
+    #22d3ee 70%,
+    #84cc16 100%
+  );
+  clip-path: polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%);
+  z-index: -1;
 }
 
 .combined-card::after {
   content: "";
   position: absolute;
   inset: 2px;
-  border-radius: calc(1rem - 2px);
+  background: #0a0a0a;
+  clip-path: polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%);
   pointer-events: none;
+  z-index: -1;
 }

@@ -1,6 +1,5 @@
-import React from 'react';
-// Make sure to import your CSS file
-// import './PrizeSection.css';
+import React from "react";
+import "./SectionStyles.css";
 
 // Interface for TrophyIcon props
 interface TrophyIconProps {
@@ -9,7 +8,10 @@ interface TrophyIconProps {
 }
 
 // Inline SVG Trophy Icon Component
-const TrophyIcon: React.FC<TrophyIconProps> = ({ colorClass, className = '' }) => (
+const TrophyIcon: React.FC<TrophyIconProps> = ({
+  colorClass,
+  className = "",
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -18,7 +20,6 @@ const TrophyIcon: React.FC<TrophyIconProps> = ({ colorClass, className = '' }) =
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    // We apply the specific text color class here to color the SVG stroke
     className={`${colorClass} ${className}`}
   >
     <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
@@ -30,40 +31,46 @@ const TrophyIcon: React.FC<TrophyIconProps> = ({ colorClass, className = '' }) =
   </svg>
 );
 
-// Interface for PrizeCard props
-interface PrizeCardProps {
-  place: string; // Kept for interface compatibility, though unused in render
+// Interface for PodiumItem props
+interface PodiumItemProps {
+  place: "1st" | "2nd" | "3rd";
   title: string;
-  reward: string;
-  heightClass: string;
-  borderClass: string;
-  iconColorClass: string;
-  textClass?: string; // Kept optional for interface compatibility, unused in render
+  prize: string;
+  extras?: string;
+  height: string;
+  colorClass: string;
 }
 
-// Reusable Prize Card Component
-const PrizeCard: React.FC<PrizeCardProps> = ({
+// Reusable Podium Item Component
+const PodiumItem: React.FC<PodiumItemProps> = ({
+  place,
   title,
-  reward,
-  heightClass,
-  borderClass,
-  iconColorClass,
+  prize,
+  extras,
+  height,
+  colorClass,
 }) => {
   return (
-    <div className={`flex flex-col items-center ${heightClass}`}>
-      {/* Floating Trophy Icon */}
-      <div className="mb-6">
-        <TrophyIcon colorClass={iconColorClass} className="w-12 h-12" />
+    <div className={`podium-item podium-${place}`}>
+      {/* Trophy Icon */}
+      <div className="podium-trophy">
+        <TrophyIcon
+          colorClass={colorClass}
+          className="w-5 h-5 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12"
+        />
       </div>
 
-      {/* The Card Element */}
-      <div
-        // We combine tailwind utilities with the custom 'circuit-bg' CSS class
-        // Ensure 'circuit-bg' is defined in your imported CSS file
-        className={`circuit-bg relative w-full flex-grow flex flex-col items-center justify-center p-6 rounded-2xl border-2 ${borderClass} text-center z-10`}
-      >
-        <h3 className="text-xl font-bold text-white uppercase mb-2">{title}</h3>
-        <p className="text-white/90 font-medium">{reward}</p>
+      {/* Glowing cylindrical base */}
+      <div className={`podium-base ${height}`}>
+        {/* Content inside the base */}
+        <div className="podium-content">
+          <h3 className={`podium-title ${colorClass}`}>{title}</h3>
+          <p className={`podium-prize ${colorClass}`}>{prize}</p>
+          {extras && <p className="podium-extra">{extras}</p>}
+        </div>
+
+        {/* Bottom glow */}
+        <div className="podium-glow" />
       </div>
     </div>
   );
@@ -72,51 +79,46 @@ const PrizeCard: React.FC<PrizeCardProps> = ({
 // Main Section Component
 const PrizePodium: React.FC = () => {
   return (
-    // Main Container - Dark background (you might already have this on your body wrapper)
-    <section className="w-full  py-20 px-4 flex flex-col items-center justify-center min-h-[600px]">
+    <section className="w-full py-8 sm:py-16 md:py-24 lg:py-32 px-2 sm:px-4 md:px-6 lg:px-8 flex flex-col items-center justify-center min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh]">
       {/* Section Title */}
-      <h2 className="text-4xl md:text-5xl font-bold text-white mb-20 text-center">
-        Prize Section (//to be modified)
+      <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 sm:mb-12 md:mb-16 lg:mb-20 text-center font-[progress] tracking-tight">
+        Prize Pool
       </h2>
 
-      {/* Podium Container - items-end aligns them to the bottom to show height differences */}
-      {/* Fixed typo: 'w-fullmax-w-5xl' changed to 'w-full max-w-5xl' */}
-      <div className="flex flex-col md:flex-row items-end justify-center gap-6 md:gap-8 w-full max-w-5xl">
-
-        {/* 2nd Place (Left - Medium Height) */}
-        <div className="w-full md:w-1/3 order-2 md:order-1">
-          <PrizeCard
-            place="2"
+      {/* Podium Container */}
+      <div className="prize-podium-container">
+        {/* 2nd Place (Left) */}
+        <div className="order-2 md:order-1">
+          <PodiumItem
+            place="2nd"
             title="2nd Place"
-            reward="50,000 "
-            heightClass="h-[350px]" // Medium height
-            borderClass="border-green-500 shadow-[0_0_15px_-3px_rgba(34,197,94,0.4)]" // Green border + subtle glow
-            iconColorClass="text-green-500"
+            prize="₹50,000"
+            extras="+ SWAG"
+            height="h-[140px] sm:h-[220px] md:h-[320px] lg:h-[400px] xl:h-[480px]"
+            colorClass="text-green-500"
           />
         </div>
 
-        {/* 1st Place (Center - Tallest Height) */}
-        <div className="w-full md:w-1/3 order-1 md:order-2 z-20">
-          <PrizeCard
-            place="1"
+        {/* 1st Place (Center - Tallest) */}
+        <div className="order-1 md:order-2">
+          <PodiumItem
+            place="1st"
             title="1st Place - Grand Prize"
-            reward="100,000 "
-            heightClass="h-[420px]" // Tallest height
-            // Using lime-400 for that bright yellow-green look
-            borderClass="border-lime-400 shadow-[0_0_20px_-3px_rgba(163,230,53,0.5)]"
-            iconColorClass="text-lime-400"
+            prize="₹1,00,000"
+            extras=""
+            height="h-[180px] sm:h-[280px] md:h-[400px] lg:h-[520px] xl:h-[640px]"
+            colorClass="text-lime-400"
           />
         </div>
 
-        {/* 3rd Place (Right - Shortest Height) */}
-        <div className="w-full md:w-1/3 order-3 md:order-3">
-          <PrizeCard
-            place="3"
+        {/* 3rd Place (Right - Shortest) */}
+        <div className="order-3 md:order-3">
+          <PodiumItem
+            place="3rd"
             title="3rd Place"
-            reward="2,5000"
-            heightClass="h-[300px]" // Shortest Height
-            borderClass="border-yellow-400 shadow-[0_0_15px_-3px_rgba(250,204,21,0.4)]" // Yellow border
-            iconColorClass="text-yellow-400"
+            prize="₹25,000"
+            height="h-[120px] sm:h-[180px] md:h-[280px] lg:h-[360px] xl:h-[440px]"
+            colorClass="text-yellow-400"
           />
         </div>
       </div>

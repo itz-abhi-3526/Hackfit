@@ -30,25 +30,25 @@ const topicsData: TopicData[] = [
 ];
 const CombinedTopicCard: React.FC<{ topic: TopicData }> = ({ topic }) => {
   return (
-    <div className="neon-container relative overflow-hidden w-full h-full flex flex-col md:flex-row gap-10 p-8 md:p-12 circuit-bg-pattern">
+    <div className="relative overflow-hidden w-full h-full flex flex-col md:flex-row gap-6 md:gap-10 p-6 md:p-8 lg:p-12 circuit-bg-pattern bg-gradient-to-br from-bgBlack via-bgBlack to-bgBlack/90">
       <div className="absolute inset-0 opacity-10 glitch-overlay-anim" />
 
-      <div className="flex-1 flex flex-col gap-6 z-10">
-        <div className="inline-flex items-center gap-3 px-4 py-1 rounded-full border border-lime/40 bg-bgBlack/70 backdrop-blur">
+      <div className="flex-1 flex flex-col gap-4 md:gap-6 z-10">
+        <div className="inline-flex items-center gap-3 px-4 py-1 rounded-full border border-lime/40 bg-bgBlack/70 backdrop-blur w-fit">
           <span className="w-2 h-2 rounded-full bg-lime shadow-[0_0_8px_rgba(147,205,45,0.9)]" />
           <span className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-lime font-roboto">
             Hackfit Signal
           </span>
         </div>
 
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-geist font-semibold tracking-tight text-lime palette-glitch-text">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-geist font-semibold tracking-tight text-lime palette-glitch-text">
           {topic.title}
         </h2>
         <p className="text-sm md:text-base text-sage/85 max-w-xl font-roboto">
           {topic.subtitle}
         </p>
 
-        <div className="flex flex-wrap gap-3 mt-4">
+        <div className="flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-4">
           {topic.badges.map((badge) => (
             <span
               key={badge}
@@ -61,23 +61,34 @@ const CombinedTopicCard: React.FC<{ topic: TopicData }> = ({ topic }) => {
       </div>
 
       <div className="flex-1 relative flex items-center justify-center z-0">
-        <div className="relative w-full max-w-xs md:max-w-sm lg:max-w-md aspect-square rounded-3xl bg-bgBlack/70 combined-card shadow-[0_0_40px_rgba(147,205,45,0.45)] overflow-hidden">
+        <div
+          className="relative w-full max-w-[200px] sm:max-w-xs md:max-w-sm lg:max-w-md aspect-square bg-bgBlack/70 combined-card shadow-[0_0_40px_rgba(147,205,45,0.45)] overflow-hidden"
+          style={{
+            clipPath: "polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%)",
+          }}
+        >
           <div className="absolute inset-0 pulse-glow-anim bg-[radial-gradient(circle_at_10%_20%,rgba(147,205,45,0.25)_0,transparent_60%),radial-gradient(circle_at_80%_80%,rgba(50,187,210,0.25)_0,transparent_60%)] mix-blend-screen" />
           <div className="absolute inset-0 glitch-overlay-anim opacity-20" />
-          <div className="absolute inset-[1px] rounded-[1.5rem] bg-gradient-to-br from-bgBlack via-bgBlack to-bgBlack/80" />
+          <div
+            className="absolute inset-[1px] bg-gradient-to-br from-bgBlack via-bgBlack to-bgBlack/80"
+            style={{
+              clipPath:
+                "polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%)",
+            }}
+          />
 
-          <div className="relative z-10 flex flex-col items-center justify-center h-full gap-4">
-            <div className="relative w-32 h-32 md:w-40 md:h-40">
+          <div className="relative z-10 flex flex-col items-center justify-center h-full gap-4 p-4">
+            <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40">
               {/* Animated Placeholder - CSS only */}
               <div className="absolute inset-0 rounded-full border-2 border-lime/40 animate-spin-slow"></div>
               <div className="absolute inset-2 rounded-full border border-cyan/30 animate-pulse"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-lime to-cyan rounded-full animate-pulse shadow-lg"></div>
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-lime to-cyan rounded-full animate-pulse shadow-lg"></div>
               </div>
               <div className="absolute -inset-6 rounded-full bg-gradient-to-tr from-lime/10 via-acid/10 to-cyan/10 blur-3xl" />
             </div>
 
-            <div className="flex flex-wrap gap-2 text-[10px] md:text-xs uppercase tracking-[0.25em] text-sage/60 font-roboto justify-center">
+            <div className="flex flex-wrap gap-1 sm:gap-2 text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] text-sage/60 font-roboto justify-center text-center">
               <span>Motion Capture</span>
               <span className="opacity-40">•</span>
               <span>Adaptive AI</span>
@@ -122,8 +133,8 @@ const HackathonTopicsCarousel: React.FC = () => {
   const currentTopic = topicsData[activeIndex];
 
   return (
-    <section className="bg-bgBlack min-h-screen py-24 px-4 text-white">
-      <div className="max-w-6xl mx-auto flex flex-col gap-10">
+    <section className="relative min-h-screen py-16 sm:py-20 md:py-24 px-4 text-white z-10">
+      <div className="max-w-6xl mx-auto flex flex-col gap-6 sm:gap-8 md:gap-10">
         <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-sage/70 font-roboto mb-2">
@@ -149,8 +160,14 @@ const HackathonTopicsCarousel: React.FC = () => {
           </div>
         </header>
 
-        <div className="relative w-full">
-          <div className="relative w-full overflow-hidden rounded-3xl border border-sage/40 bg-bgBlack/80 shadow-[0_0_40px_rgba(0,0,0,0.8)]">
+        <div className="relative w-full neon-container-wrapper">
+          <div
+            className="relative w-full overflow-hidden bg-bgBlack/80 shadow-[0_0_40px_rgba(0,0,0,0.8)]"
+            style={{
+              clipPath:
+                "polygon(2% 2%, 35% 2%, 40% 8%, 98% 8%, 98% 98%, 2% 98%)",
+            }}
+          >
             <div className="relative w-full h-full min-h-[420px] md:min-h-[460px] lg:min-h-[480px]">
               <CombinedTopicCard topic={currentTopic} />
             </div>
