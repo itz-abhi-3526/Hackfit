@@ -42,7 +42,7 @@ export const Header: React.FC = () => {
           />
           <div className="relative z-20 ml-auto mr-6">
             <a
-              href="#register"
+              href="/register"
               className="register-button relative flex items-center gap-2 px-6 py-2.5 text-white font-[progress] font-semibold text-sm transition-all duration-300 group"
             >
               <span className="relative z-10">Register Now</span>
