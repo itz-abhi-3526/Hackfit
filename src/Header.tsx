@@ -15,6 +15,7 @@ import {
 import "./Header.css";
 export const Header: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [unicornLoaded, setUnicornLoaded] = useState(false);
 
   const navItems = [
     { name: "Home", link: "#" },
@@ -85,20 +86,25 @@ export const Header: React.FC = () => {
       </Navbar>
 
       {/* Unicorn Studio WebGL Background */}
-      <div className="absolute inset-0 z-0 h-full w-full">
+      <div
+        className={`absolute inset-0 z-0 h-full w-full unicorn-fade-in ${unicornLoaded ? "unicorn-loaded" : ""}`}
+      >
         <UnicornScene
           projectId="qcSz9g3TZ1R59X5U8IKC"
           sdkUrl="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.0.5/dist/unicornStudio.umd.js"
           width="100%"
           height="100%"
-          onLoad={() => console.log("UnicornScene loaded successfully")}
+          onLoad={() => {
+            console.log("UnicornScene loaded successfully");
+            setTimeout(() => setUnicornLoaded(true), 100);
+          }}
           onError={(error) => console.error("UnicornScene error:", error)}
         />
         {/* Fallback background */}
-        <div 
+        <div
           className="absolute inset-0 -z-10 opacity-30"
           style={{
-            background: `url(${patternBg}) center/cover, linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%)`
+            background: `url(${patternBg}) center/cover, linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%)`,
           }}
         />
       </div>

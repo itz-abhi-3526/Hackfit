@@ -9,6 +9,16 @@
    #32bbd2 (Cyan)
 */
 
+/* Unicorn Studio fade-in animation */
+.unicorn-fade-in {
+  opacity: 0;
+  transition: opacity 1.5s ease-in;
+}
+
+.unicorn-fade-in.unicorn-loaded {
+  opacity: 1;
+}
+
 @keyframes palette-glitch {
   0% {
     text-shadow: none;
