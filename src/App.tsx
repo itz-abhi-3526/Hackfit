@@ -3,18 +3,22 @@ import LoadingScreen from "./components/LoadingScreen";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Register from "./pages/RegisterPage";
+import { useSmoothScroll } from "./hooks/useSmoothScroll";
 
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    // Check if this is a fresh visit (not a page refresh or navigation)
+    const hasVisited = sessionStorage.getItem("hackfit-visited");
+    return !hasVisited;
+  });
+
+  // Initialize smooth scrolling
+  useSmoothScroll();
 
   useEffect(() => {
-    // Simply wait 2 seconds for everything to load
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
+    // Mark as visited for this session
+    sessionStorage.setItem("hackfit-visited", "true");
   }, []);
 
   if (isLoading) {
