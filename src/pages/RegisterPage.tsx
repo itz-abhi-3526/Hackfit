@@ -1,4 +1,3 @@
-import React from "react";
 import RegistrationWizard from "../components/Registration/RegistrationWizard";
 import "../components/Registration/Registration.css";
 

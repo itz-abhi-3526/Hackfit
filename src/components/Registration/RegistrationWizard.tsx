@@ -1,7 +1,9 @@
 import { useState } from "react";
+import TeamSizeSelector from "./TeamSizeSelector";
 
 export default function RegistrationWizard() {
   const [step, setStep] = useState(1);
+  const [teamSize, setTeamSize] = useState(3);
   
   const steps = [
     { number: 1, label: "TEAM SIZE" },
@@ -36,8 +38,12 @@ export default function RegistrationWizard() {
         <div className="registration-content-box">
           {step === 1 && (
             <div>
-              <h2>Step 1: Team Size Content</h2>
-              <button onClick={nextStep}>Next</button>
+              <TeamSizeSelector
+                teamSize={teamSize}
+                setTeamSize={setTeamSize}
+                onNext={nextStep}
+              />
+              <button className="wizard-next-btn" onClick={nextStep}>NEXT →</button>
             </div>
           )}
           {step === 2 && (
