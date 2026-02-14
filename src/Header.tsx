@@ -143,15 +143,15 @@ export const Header: React.FC = () => {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen py-20 pt-40">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen py-20 pt-40 px-4">
         {/* Centered HACKFIT Title */}
-        <h1 className="text-[80px] font-bold mb-8 font-[progress] leading-tight flex flex-wrap items-center justify-center gap-1 sm:text-[10px] sm:flex-row sm:gap-2">
-          <div className="flex items-center gap-2">
+        <h1 className="hackfit-hero-title font-bold mb-8 font-[progress] leading-tight flex flex-wrap items-center justify-center">
+          <div className="flex items-center hackfit-title-wrapper">
             <GradientText
               colors={["#93cd2d", "#d4e21c", "#e1ce10", "#93cd2d"]}
               animationSpeed={3}
               showBorder={false}
-              className="lg:text-[180px] sm:text-[10px]"
+              className="hackfit-gradient-text"
               yoyo={true}
               pauseOnHover={true}
             >
@@ -161,12 +161,12 @@ export const Header: React.FC = () => {
               colors={["#1b759f", "#8cb798", "#32bbd2"]}
               animationSpeed={3}
               showBorder={false}
-              className="lg:text-[180px] sm:text-[10px]"
+              className="hackfit-gradient-text"
               pauseOnHover={true}
             >
               FIT
             </GradientText>
-            <span className="font-[paladins] flex m-0 text-lime-400 mt-5 palette-text lg:text-[110px] sm:text-[35px]">
+            <span className="font-[paladins] flex m-0 text-lime-400 palette-text hackfit-version-text">
               4.0
             </span>
           </div>
