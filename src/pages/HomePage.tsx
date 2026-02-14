@@ -16,70 +16,84 @@ export default function HomePage() {
         <Header />
       </div>
 
-      {/* Prize Section with dither texture */}
-      <AnimatedSection
-        animationType="fadeUp"
-        className="section-dither flex justify-center px-4 sm:px-6 py-12 sm:py-16 relative"
-        threshold={0.2}
-      >
-        <div className="relative z-10 w-full">
-          <LazyComponent threshold={0.1}>
-            <PrizePodium />
-          </LazyComponent>
-        </div>
-      </AnimatedSection>
-
-      {/* Divider after Prize Section */}
-      <AnimatedSection animationType="fadeIn" delay={200}>
-        <CyberDivider />
-      </AnimatedSection>
-
-      {/* Topics Section with dither texture */}
-      <div className="section-dither">
-        <AnimatedSection animationType="slideInLeft" threshold={0.2}>
-          <LazyComponent threshold={0.1}>
-            <HackathonTopicsCarousel />
-          </LazyComponent>
+        {/* Prize Section with dither texture */}
+        <AnimatedSection
+          animationType="fadeUp"
+          className="section-dither flex justify-center px-4 sm:px-6 py-12 sm:py-16 relative"
+          threshold={0.2}
+        >
+          <div className="relative z-10 w-full">
+            <LazyComponent threshold={0.1}>
+              <PrizePodium />
+            </LazyComponent>
+          </div>
         </AnimatedSection>
-      </div>
 
-      {/* Divider before HackathonCards */}
-      <AnimatedSection animationType="fadeIn" delay={300}>
-        <CyberDivider />
-      </AnimatedSection>
+        {/* Divider after Prize Section */}
+        <AnimatedSection
+          animationType="fadeIn"
+          delay={200}
+          className="bg2-texture"
+        >
+          <CyberDivider />
+        </AnimatedSection>
 
-      {/* HackathonCards Section with dither texture */}
-      <AnimatedSection
-        animationType="fadeUp"
-        className="section-dither relative flex justify-center px-4 sm:px-6 py-12 sm:py-16"
-        threshold={0.2}
-      >
-        <div className="relative z-10 w-full max-w-7xl">
-          <LazyComponent threshold={0.1}>
-            <HackathonCards />
-          </LazyComponent>
+        {/* Topics Section with dither texture */}
+        <div className="section-dither bg2-texture">
+          <AnimatedSection animationType="slideInLeft" threshold={0.2}>
+            <LazyComponent threshold={0.1}>
+              <HackathonTopicsCarousel />
+            </LazyComponent>
+          </AnimatedSection>
         </div>
-      </AnimatedSection>
 
-      {/* Divider before Contact Section */}
-      <AnimatedSection animationType="fadeIn" delay={400}>
-        <CyberDivider />
-      </AnimatedSection>
+        {/* Divider before HackathonCards */}
+        <AnimatedSection
+          animationType="fadeIn"
+          delay={300}
+        >
+          <CyberDivider />
+        </AnimatedSection>
 
-      {/* Contact Section - plain black to blend with footer */}
-      <div className="bg-black">
-        <AnimatedSection animationType="slideInRight" threshold={0.3}>
+        {/* HackathonCards Section with dither texture */}
+        <AnimatedSection
+          animationType="fadeUp"
+          className="section-dither relative flex justify-center px-4 sm:px-6 py-12 sm:py-16"
+          threshold={0.2}
+        >
+          <div className="relative z-10 w-full max-w-7xl">
+            <LazyComponent threshold={0.1}>
+              <HackathonCards />
+            </LazyComponent>
+          </div>
+        </AnimatedSection>
+
+        {/* Divider before Contact Section */}
+        <AnimatedSection
+          animationType="fadeIn"
+          delay={400}
+        >
+          <CyberDivider />
+        </AnimatedSection>
+
+        {/* Contact Section - plain black to blend with footer */}
+        <div>
+          <AnimatedSection animationType="slideInRight" threshold={0.3}>
+            <LazyComponent>
+              <ContactSection />
+            </LazyComponent>
+          </AnimatedSection>
+        </div>
+
+        <AnimatedSection
+          animationType="fadeUp"
+          threshold={0.3}
+        >
           <LazyComponent>
-            <ContactSection />
+            <Footer />
           </LazyComponent>
         </AnimatedSection>
-      </div>
-
-      <AnimatedSection animationType="fadeUp" threshold={0.3}>
-        <LazyComponent>
-          <Footer />
-        </LazyComponent>
-      </AnimatedSection>
+      
     </div>
   );
 }

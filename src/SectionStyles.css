@@ -11,6 +11,45 @@
   overflow: hidden;
 }
 
+/* Shared textured background (bg2.png) used across sections */
+.bg2-texture {
+  position: relative;
+  isolation: isolate;
+  background-color: #000000;
+  background-image: url("./assets/bg3.png"), url("./assets/bg3.5.png");
+  background-size: 25%, 20%;
+  background-repeat: no-repeat, no-repeat;
+  background-position: top left, bottom right;
+}
+
+/* .bg2-texturee {
+  position: relative;
+  isolation: isolate;
+  background-color: #000000;
+  background-image: url("./assets/bg4.png");
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: top ce;
+} */
+/* .bg2-texture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(50, 187, 210, 0.08),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(147, 205, 45, 0.06),
+      transparent 40%
+    );
+  pointer-events: none;
+  z-index: -1;
+} */
+
 /* Dither texture overlay using the same pattern as landing page */
 .section-dither::before {
   content: "";
