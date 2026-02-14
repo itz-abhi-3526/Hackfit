@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import type { PanInfo } from "framer-motion";
 import "./CarouselStyles.css";
 
 interface TopicData {
@@ -28,9 +30,57 @@ const topicsData: TopicData[] = [
     badges: ["Lorem", "Ipsum", "Dolor"],
   },
 ];
-const CombinedTopicCard: React.FC<{ topic: TopicData }> = ({ topic }) => {
+const CombinedTopicCard: React.FC<{
+  topic: TopicData;
+  direction: number;
+  onDragEnd?: (event: any, info: PanInfo) => void;
+  onPointerDown?: () => void;
+  onPointerUp?: () => void;
+}> = ({ topic, direction, onDragEnd, onPointerDown, onPointerUp }) => {
   return (
-    <div className="relative overflow-hidden w-full h-full flex flex-col md:flex-row gap-6 md:gap-10 p-6 md:p-8 lg:p-12 circuit-bg-pattern bg-gradient-to-br from-bgBlack via-bgBlack to-bgBlack/90">
+    <motion.div
+      key={topic.id}
+      custom={direction}
+      variants={{
+        enter: (direction: number) => ({
+          x: direction > 0 ? 600 : -600,
+          opacity: 0,
+          rotateY: direction > 0 ? 25 : -25,
+          scale: 0.95,
+        }),
+        center: {
+          zIndex: 1,
+          x: 0,
+          opacity: 1,
+          rotateY: 0,
+          scale: 1,
+        },
+        exit: (direction: number) => ({
+          zIndex: 0,
+          x: direction < 0 ? 600 : -600,
+          opacity: 0,
+          rotateY: direction < 0 ? 25 : -25,
+          scale: 0.95,
+        }),
+      }}
+      initial="enter"
+      animate="center"
+      exit="exit"
+      transition={{
+        x: { type: "spring", stiffness: 120, damping: 20 },
+        opacity: { duration: 0.6 },
+        rotateY: { duration: 0.6 },
+        scale: { duration: 0.6 },
+      }}
+      className="absolute inset-0 overflow-hidden w-full h-full flex flex-col md:flex-row gap-6 md:gap-10 p-6 md:p-8 lg:p-12 circuit-bg-pattern bg-gradient-to-br from-bgBlack via-bgBlack to-bgBlack/90"
+      style={{ perspective: 1200 }}
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.16}
+      onDragEnd={onDragEnd}
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+    >
       <div className="absolute inset-0 opacity-10 glitch-overlay-anim" />
 
       <div className="flex-1 flex flex-col gap-4 md:gap-6 z-10">
@@ -98,42 +148,62 @@ const CombinedTopicCard: React.FC<{ topic: TopicData }> = ({ topic }) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 const HackathonTopicsCarousel: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [[, direction], setPage] = useState<[number, number]>([0, 1]);
+  const [isPaused, setIsPaused] = useState(false);
   const autoPlayRef = useRef<number | null>(null);
 
   const nextSlide = () => {
-    setActiveIndex((prev) => (prev + 1) % topicsData.length);
+    const newIndex = (activeIndex + 1) % topicsData.length;
+    setPage([newIndex, 1]);
+    setActiveIndex(newIndex);
   };
 
   const prevSlide = () => {
-    setActiveIndex(
-      (prev) => (prev - 1 + topicsData.length) % topicsData.length,
-    );
+    const newIndex = (activeIndex - 1 + topicsData.length) % topicsData.length;
+    setPage([newIndex, -1]);
+    setActiveIndex(newIndex);
   };
 
+  // restart autoplay whenever activeIndex changes (keeps timing consistent after manual navigation)
   useEffect(() => {
     if (autoPlayRef.current) {
       window.clearInterval(autoPlayRef.current);
     }
 
-    autoPlayRef.current = window.setInterval(nextSlide, 8000);
+    if (!isPaused) {
+      // slower, smooth autoplay
+      autoPlayRef.current = window.setInterval(nextSlide, 6000);
+    }
 
     return () => {
       if (autoPlayRef.current) {
         window.clearInterval(autoPlayRef.current);
       }
     };
-  }, []);
+  }, [activeIndex, isPaused]);
+
+  const handlePointerDown = () => {
+    setIsPaused(true);
+    if (autoPlayRef.current) {
+      window.clearInterval(autoPlayRef.current);
+      autoPlayRef.current = null;
+    }
+  };
+
+  const handlePointerUp = () => {
+    setIsPaused(false);
+  };
 
   const currentTopic = topicsData[activeIndex];
 
   return (
-    <section className="relative min-h-screen py-16 sm:py-20 md:py-24 px-4 text-white z-10">
+    <section className="relative min-h-screen py-16 sm:py-20 md:py-24 px-4 text-white z-10 overflow-hidden">
       <div className="max-w-6xl mx-auto flex flex-col gap-6 sm:gap-8 md:gap-10">
         <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
@@ -169,7 +239,25 @@ const HackathonTopicsCarousel: React.FC = () => {
             }}
           >
             <div className="relative w-full h-full min-h-[420px] md:min-h-[460px] lg:min-h-[480px]">
-              <CombinedTopicCard topic={currentTopic} />
+              {/* overlapping enter/exit for seamless transitions */}
+              <AnimatePresence initial={false} custom={direction}>
+                <CombinedTopicCard
+                  key={activeIndex}
+                  topic={currentTopic}
+                  direction={direction}
+                  onDragEnd={(_, info) => {
+                    const threshold = 100;
+                    const velocityThreshold = 500;
+                    if (info.offset.x < -threshold || info.velocity.x < -velocityThreshold) {
+                      nextSlide();
+                    } else if (info.offset.x > threshold || info.velocity.x > velocityThreshold) {
+                      prevSlide();
+                    }
+                  }}
+                  onPointerDown={handlePointerDown}
+                  onPointerUp={handlePointerUp}
+                />
+              </AnimatePresence>
             </div>
           </div>
 
@@ -178,7 +266,11 @@ const HackathonTopicsCarousel: React.FC = () => {
               {topicsData.map((topic, index) => (
                 <button
                   key={topic.id}
-                  onClick={() => setActiveIndex(index)}
+                  onClick={() => {
+                    const dir = index > activeIndex ? 1 : -1;
+                    setPage([index, dir]);
+                    setActiveIndex(index);
+                  }}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
                     index === activeIndex
                       ? "w-8 bg-lime"
