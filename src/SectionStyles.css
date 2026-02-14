@@ -433,11 +433,12 @@
 }
 
 .podium-prize {
-  font-family: "PaladinsGradient", sans-serif;
+  font-family: "Paladins", sans-serif;
   font-size: 0.8rem;
   font-weight: bold;
   line-height: 1;
   word-break: keep-all;
+  margin: 20px;
 }
 
 .podium-extra {

@@ -65,7 +65,7 @@ const PodiumItem: React.FC<PodiumItemProps> = ({
         {/* Content inside the base */}
         <div className="podium-content">
           <h3 className={`podium-title ${colorClass}`}>{title}</h3>
-          <p className={`podium-prize ${colorClass}`}>{prize}</p>
+          <p className={`podium-prize ${colorClass} font-[paladins]`}>{prize}</p>
           {extras && <p className="podium-extra">{extras}</p>}
         </div>
 
@@ -88,12 +88,12 @@ const PrizePodium: React.FC = () => {
       {/* Podium Container */}
       <div className="prize-podium-container">
         {/* 2nd Place (Left) */}
-        <div className="order-2 md:order-1">
+        <div className="order-2 md:order-1 ">
           <PodiumItem
             place="2nd"
             title="2nd Place"
             prize="₹50,000"
-            extras="+ SWAG"
+            extras=""
             height="h-[140px] sm:h-[220px] md:h-[320px] lg:h-[400px] xl:h-[480px]"
             colorClass="text-green-500"
           />
