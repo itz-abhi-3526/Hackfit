@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useIntersectionObserver } from "./hooks/useIntersectionObserver";
 import "./SectionStyles.css";
 
 // Interface for TrophyIcon props
@@ -35,21 +36,75 @@ const TrophyIcon: React.FC<TrophyIconProps> = ({
 interface PodiumItemProps {
   place: "1st" | "2nd" | "3rd";
   title: string;
-  prize: string;
+  prizeAmount: number;
   extras?: string;
   height: string;
   colorClass: string;
+  active: boolean;
+  delayMs?: number;
 }
+
+const useCountUp = (
+  target: number,
+  start: boolean,
+  duration = 1800,
+  delay = 0,
+) => {
+  const [value, setValue] = useState(0);
+  const startedRef = useRef(false);
+
+  useEffect(() => {
+    if (!start || startedRef.current) return;
+    startedRef.current = true;
+
+    let frameId: number;
+    let startTime: number | null = null;
+
+    const animate = (timestamp: number) => {
+      if (startTime === null) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 4); // Smoother easing
+      const newValue = Math.round(target * eased);
+
+      // Only update if value changed to reduce re-renders
+      setValue((prev) => (prev !== newValue ? newValue : prev));
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(animate);
+      }
+    };
+
+    const timer = window.setTimeout(() => {
+      frameId = requestAnimationFrame(animate);
+    }, delay);
+
+    return () => {
+      window.clearTimeout(timer);
+      if (frameId) cancelAnimationFrame(frameId);
+    };
+  }, [delay, duration, start, target]);
+
+  return value;
+};
 
 // Reusable Podium Item Component
 const PodiumItem: React.FC<PodiumItemProps> = ({
   place,
   title,
-  prize,
+  prizeAmount,
   extras,
   height,
   colorClass,
+  active,
+  delayMs = 0,
 }) => {
+  const displayValue = useCountUp(prizeAmount, active, 1150, delayMs);
+  const formattedPrize = useMemo(
+    () => `₹${displayValue.toLocaleString("en-IN")}`,
+    [displayValue],
+  );
+
   return (
     <div className={`podium-item podium-${place}`}>
       {/* Trophy Icon */}
@@ -65,7 +120,9 @@ const PodiumItem: React.FC<PodiumItemProps> = ({
         {/* Content inside the base */}
         <div className="podium-content">
           <h3 className={`podium-title ${colorClass}`}>{title}</h3>
-          <p className={`podium-prize ${colorClass} font-[paladins]`}>{prize}</p>
+          <p className={`podium-prize ${colorClass} font-[paladins]`}>
+            {formattedPrize}
+          </p>
           {extras && <p className="podium-extra">{extras}</p>}
         </div>
 
@@ -78,8 +135,16 @@ const PodiumItem: React.FC<PodiumItemProps> = ({
 
 // Main Section Component
 const PrizePodium: React.FC = () => {
+  const { ref, isIntersecting } = useIntersectionObserver({
+    threshold: 0.3,
+    freezeOnceVisible: true,
+  });
+
   return (
-    <section className="w-full py-8 sm:py-16 md:py-24 lg:py-32 px-2 sm:px-4 md:px-6 lg:px-8 flex flex-col items-center justify-center min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh]">
+    <section
+      ref={ref}
+      className="w-full py-8 sm:py-16 md:py-24 lg:py-32 px-2 sm:px-4 md:px-6 lg:px-8 flex flex-col items-center justify-center min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh]"
+    >
       {/* Section Title */}
       <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 sm:mb-12 md:mb-16 lg:mb-20 text-center font-[progress] tracking-tight">
         Prize Pool
@@ -92,10 +157,12 @@ const PrizePodium: React.FC = () => {
           <PodiumItem
             place="2nd"
             title="2nd Place"
-            prize="₹50,000"
+            prizeAmount={50000}
             extras=""
             height="h-[140px] sm:h-[220px] md:h-[320px] lg:h-[400px] xl:h-[480px]"
             colorClass="text-green-500"
+            active={isIntersecting}
+            delayMs={200}
           />
         </div>
 
@@ -104,10 +171,12 @@ const PrizePodium: React.FC = () => {
           <PodiumItem
             place="1st"
             title="1st Place - Grand Prize"
-            prize="₹1,00,000"
+            prizeAmount={100000}
             extras=""
             height="h-[180px] sm:h-[280px] md:h-[400px] lg:h-[520px] xl:h-[640px]"
             colorClass="text-lime-400"
+            active={isIntersecting}
+            delayMs={0}
           />
         </div>
 
@@ -116,9 +185,11 @@ const PrizePodium: React.FC = () => {
           <PodiumItem
             place="3rd"
             title="3rd Place"
-            prize="₹25,000"
+            prizeAmount={25000}
             height="h-[120px] sm:h-[180px] md:h-[280px] lg:h-[360px] xl:h-[440px]"
             colorClass="text-yellow-400"
+            active={isIntersecting}
+            delayMs={400}
           />
         </div>
       </div>
