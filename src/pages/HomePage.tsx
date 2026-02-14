@@ -7,6 +7,8 @@ import ContactSection from "../components/ContactSection";
 import CyberDivider from "../components/CyberDivider";
 import { AnimatedSection } from "../components/AnimatedSection";
 import { LazyComponent } from "../components/LazyComponent";
+import WhatIsHackfit from "../components/WhatIsHackfit";
+import TimelineSection from "../components/TimelineSection";
 import "../SectionStyles.css";
 
 export default function HomePage() {
@@ -16,7 +18,11 @@ export default function HomePage() {
         <Header />
       </div>
 
-      {/* Prize Section with dither texture */}
+      <AnimatedSection animationType="fadeUp" threshold={0.15}>
+        <WhatIsHackfit />
+      </AnimatedSection>
+
+      {/* Prize Section */}
       <AnimatedSection
         animationType="fadeUp"
         className="section-dither flex justify-center px-4 sm:px-6 py-12 sm:py-16 relative"
@@ -29,12 +35,11 @@ export default function HomePage() {
         </div>
       </AnimatedSection>
 
-      {/* Divider after Prize Section */}
       <AnimatedSection animationType="fadeIn" delay={200}>
         <CyberDivider />
       </AnimatedSection>
 
-      {/* Topics Section with dither texture */}
+      {/* Topics Section */}
       <div className="section-dither">
         <AnimatedSection animationType="slideInLeft" threshold={0.2}>
           <LazyComponent threshold={0.1}>
@@ -43,12 +48,20 @@ export default function HomePage() {
         </AnimatedSection>
       </div>
 
-      {/* Divider before HackathonCards */}
+      {/* Timeline */}
+      <AnimatedSection
+        animationType="fadeUp"
+        threshold={0.2}
+        className="section-dither px-4 sm:px-6"
+      >
+        <TimelineSection />
+      </AnimatedSection>
+
       <AnimatedSection animationType="fadeIn" delay={300}>
         <CyberDivider />
       </AnimatedSection>
 
-      {/* HackathonCards Section with dither texture */}
+      {/* HackathonCards Section */}
       <AnimatedSection
         animationType="fadeUp"
         className="section-dither relative flex justify-center px-4 sm:px-6 py-12 sm:py-16"
@@ -61,13 +74,12 @@ export default function HomePage() {
         </div>
       </AnimatedSection>
 
-      {/* Divider before Contact Section */}
       <AnimatedSection animationType="fadeIn" delay={400}>
         <CyberDivider />
       </AnimatedSection>
 
-      {/* Contact Section - plain black to blend with footer */}
-      <div className="bg-black">
+      {/* Contact Section */}
+      <div>
         <AnimatedSection animationType="slideInRight" threshold={0.3}>
           <LazyComponent>
             <ContactSection />

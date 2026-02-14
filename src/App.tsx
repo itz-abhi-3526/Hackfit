@@ -5,6 +5,8 @@ import HomePage from "./pages/HomePage";
 import Register from "./pages/RegisterPage";
 import { useSmoothScroll } from "./hooks/useSmoothScroll";
 
+const UNICORN_SDK_URL =
+  "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.0.5/dist/unicornStudio.umd.js";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(() => {
@@ -15,6 +17,34 @@ export default function App() {
 
   // Initialize smooth scrolling
   useSmoothScroll();
+
+  // Warm up UnicornStudio assets as early as possible (during splash)
+  useEffect(() => {
+    // Preconnect to speed up TLS handshakes
+    const preconnect = document.createElement("link");
+    preconnect.rel = "preconnect";
+    preconnect.href = "https://cdn.jsdelivr.net";
+    preconnect.crossOrigin = "anonymous";
+    document.head.appendChild(preconnect);
+
+    // Preload the SDK script
+    const preload = document.createElement("link");
+    preload.rel = "preload";
+    preload.as = "script";
+    preload.href = UNICORN_SDK_URL;
+    preload.crossOrigin = "anonymous";
+    document.head.appendChild(preload);
+
+    // Trigger early chunk download for the React wrapper
+    import("unicornstudio-react").catch(() => {
+      /* ignore prefetch errors */
+    });
+
+    return () => {
+      document.head.removeChild(preconnect);
+      document.head.removeChild(preload);
+    };
+  }, []);
 
   useEffect(() => {
     // Mark as visited for this session

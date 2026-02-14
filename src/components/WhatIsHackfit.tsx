@@ -1,0 +1,71 @@
+import React from "react";
+import { AnimatedSection } from "./AnimatedSection";
+import "../SectionStyles.css";
+
+const statusLines = [
+  "Booting Hackfit core modules... [OK]",
+  "Syncing mentors + infra... [OK]",
+  "Priming challenges + datasets... [READY]",
+  "Standing by for innovators...",
+];
+
+const WhatIsHackfit: React.FC = () => {
+  return (
+    <section className="hackfit-intro section-dither py-14 sm:py-16 md:py-20 px-4 sm:px-6 md:px-10 relative overflow-hidden">
+      <div className="code-rain-overlay" aria-hidden />
+      <div className="relative z-10 max-w-6xl mx-auto grid gap-10 md:grid-cols-[1.05fr_0.95fr] items-center">
+        <AnimatedSection animationType="fadeUp" threshold={0.15}>
+          <div className="space-y-4 md:space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-lime-400/50 bg-black/60 backdrop-blur">
+              <span className="w-2 h-2 rounded-full bg-lime-400 shadow-[0_0_8px_rgba(147,205,45,0.9)]" />
+              <span className="text-[11px] tracking-[0.28em] uppercase text-lime-200 font-[progress]">
+                What is Hackfit?
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-[progress] leading-tight">
+              Build bold. Sleep later.
+            </h2>
+            <p className="text-slate-200/90 text-base md:text-lg max-w-2xl">
+              Hackfit is a neon-fueled sprint where teams ship real solutions in
+              hours—not weeks. Expect fast tracks, live mentors, and a runway to
+              launch ideas under pressure.
+            </p>
+            <div className="hackfit-pill-row">
+              <div className="hackfit-pill">
+                <span className="dot" />
+                48h Sprint
+              </div>
+              <div className="hackfit-pill accent">
+                <span className="dot" />
+                On-campus
+              </div>
+              <div className="hackfit-pill">
+                <span className="dot" />
+                Team Size: 2-4
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection animationType="slideInRight" threshold={0.2}>
+          <div className="hackfit-status-card">
+            <div className="hackfit-status-title">// SYSTEM STATUS</div>
+            <ul className="hackfit-status-list">
+              {statusLines.map((line) => (
+                <li key={line}>
+                  <span className="hackfit-status-icon">&gt;</span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-5 text-sm text-cyan-100/90 font-[progress]">
+              Are you ready to breach the build wall?
+            </div>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+};
+
+export default WhatIsHackfit;
