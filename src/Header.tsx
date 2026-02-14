@@ -1,4 +1,6 @@
 import React, { lazy, Suspense, useState } from "react";
+import { Link } from "react-router-dom";
+
 import GradientText from "./components/GradientText";
 import patternBg from "./assets/patterb.webp";
 import {
@@ -44,8 +46,8 @@ export const Header: React.FC = () => {
             onItemClick={() => setMobileOpen(false)}
           />
           <div className="relative z-20 ml-auto mr-6">
-            <a
-              href="/register"
+            <Link
+              to="/register"
               className="register-button relative flex items-center gap-2 px-6 py-2.5 text-white font-[progress] font-semibold text-sm transition-all duration-300 group"
             >
               <span className="relative z-10">Register Now</span>
@@ -62,7 +64,7 @@ export const Header: React.FC = () => {
                   d="M7 17L17 7M17 7H7M17 7V17"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </NavBody>
 
@@ -90,11 +92,7 @@ export const Header: React.FC = () => {
                 {item.name}
               </a>
             ))}
-            <NavbarButton
-              href="/register"
-              variant="dark"
-              className="w-full justify-center"
-            >
+            <NavbarButton as={Link} to="/register" variant="dark" className="w-full justify-center">
               Register
             </NavbarButton>
           </MobileNavMenu>
@@ -227,6 +225,7 @@ export const Header: React.FC = () => {
 
       {/* Black overlay to hide UnicornStudio watermark */}
       <div className="absolute bottom-0 left-0 right-0 z-20 h-16 md:h-20 bg-black" />
+       
     </header>
   );
 };

@@ -19,7 +19,9 @@ export default function HomePage() {
       </div>
 
       <AnimatedSection animationType="fadeUp" threshold={0.15}>
+          <CyberDivider />
         <WhatIsHackfit />
+    
       </AnimatedSection>
 
       {/* Prize Section */}
@@ -28,7 +30,9 @@ export default function HomePage() {
         className="section-dither flex justify-center px-4 sm:px-6 py-12 sm:py-16 relative"
         threshold={0.2}
       >
+        
         <div className="relative z-10 w-full">
+            <CyberDivider />
           <LazyComponent threshold={0.1}>
             <PrizePodium />
           </LazyComponent>
@@ -36,11 +40,11 @@ export default function HomePage() {
       </AnimatedSection>
 
       <AnimatedSection animationType="fadeIn" delay={200}>
-        <CyberDivider />
+   
       </AnimatedSection>
 
       {/* Topics Section */}
-      <div className="section-dither">
+      <div className="section-dither bg2-texture">
         <AnimatedSection animationType="slideInLeft" threshold={0.2}>
           <LazyComponent threshold={0.1}>
             <HackathonTopicsCarousel />

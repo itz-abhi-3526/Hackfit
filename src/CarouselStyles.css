@@ -19,6 +19,8 @@
 .neon-container-wrapper {
   position: relative;
   padding-top: 24px;
+  perspective: 1500px;
+  perspective-origin: center center;
 }
 
 .neon-container-wrapper::before {
