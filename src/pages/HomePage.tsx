@@ -39,9 +39,7 @@ export default function HomePage() {
         </div>
       </AnimatedSection>
 
-      <AnimatedSection animationType="fadeIn" delay={200}>
-   
-      </AnimatedSection>
+      
 
       {/* Topics Section */}
       <div className="section-dither bg2-texture">

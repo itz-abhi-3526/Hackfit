@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, PanInfo } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import type { PanInfo } from "framer-motion";
 import "./CarouselStyles.css";
 
 interface TopicData {
@@ -153,7 +154,7 @@ const CombinedTopicCard: React.FC<{
 
 const HackathonTopicsCarousel: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [[page, direction], setPage] = useState([0, 1]);
+  const [[, direction], setPage] = useState<[number, number]>([0, 1]);
   const [isPaused, setIsPaused] = useState(false);
   const autoPlayRef = useRef<number | null>(null);
 
@@ -244,7 +245,7 @@ const HackathonTopicsCarousel: React.FC = () => {
                   key={activeIndex}
                   topic={currentTopic}
                   direction={direction}
-                  onDragEnd={(e, info) => {
+                  onDragEnd={(_, info) => {
                     const threshold = 100;
                     const velocityThreshold = 500;
                     if (info.offset.x < -threshold || info.velocity.x < -velocityThreshold) {
