@@ -99,47 +99,35 @@ export const Header: React.FC = () => {
         </MobileNav>
       </Navbar>
 
-      {/* Unicorn Studio WebGL Background */}
+      {/* Static fallback background - always visible */}
+      <div
+        className="absolute inset-0 z-[-1]"
+        style={{
+          background: `url(${patternBg}) center/cover, linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%)`,
+        }}
+      />
+
+      {/* Unicorn Studio WebGL Background - fades in over fallback */}
       <div
         className={`absolute inset-0 z-0 h-full w-full unicorn-fade-in ${unicornLoaded ? "unicorn-loaded" : ""}`}
       >
         {shouldLoadUnicorn ? (
-          <Suspense
-            fallback={
-              <div
-                className="absolute inset-0 -z-10 opacity-60"
-                style={{
-                  background: `url(${patternBg}) center/cover, linear-gradient(135deg, #000000 0%, #0f1113 50%, #000000 100%)`,
-                }}
-              />
-            }
-          >
+          <Suspense fallback={null}>
             <UnicornScene
               projectId="qcSz9g3TZ1R59X5U8IKC"
               sdkUrl="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.0.5/dist/unicornStudio.umd.js"
               width="100%"
               height="100%"
               onLoad={() => {
-                setTimeout(() => setUnicornLoaded(true), 100);
+                setTimeout(() => setUnicornLoaded(true), 200);
               }}
-              onError={(error) => console.error("UnicornScene error:", error)}
+              onError={() => {
+                // Silently handle error - fallback background remains visible
+                setUnicornLoaded(false);
+              }}
             />
           </Suspense>
-        ) : (
-          <div
-            className="absolute inset-0 -z-10 opacity-40"
-            style={{
-              background: `url(${patternBg}) center/cover, linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%)`,
-            }}
-          />
-        )}
-        {/* Fallback background */}
-        <div
-          className="absolute inset-0 -z-20 opacity-20"
-          style={{
-            background: `url(${patternBg}) center/cover, linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%)`,
-          }}
-        />
+        ) : null}
       </div>
 
       {/* Content Overlay */}
@@ -218,6 +206,29 @@ export const Header: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Mobile-only Register Button */}
+        <div className="md:hidden mt-8 w-full flex justify-center">
+          <Link
+            to="/register"
+            className="register-button relative flex items-center gap-2 px-8 py-3 text-white font-[progress] font-semibold text-base transition-all duration-300 group"
+          >
+            <span className="relative z-10">Register Now</span>
+            <svg
+              className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M7 17L17 7M17 7H7M17 7V17"
+              />
+            </svg>
+          </Link>
         </div>
 
         {/* Info Grid */}

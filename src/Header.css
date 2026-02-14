@@ -12,7 +12,8 @@
 /* Unicorn Studio fade-in animation */
 .unicorn-fade-in {
   opacity: 0;
-  transition: opacity 1.5s ease-in;
+  transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
 }
 
 .unicorn-fade-in.unicorn-loaded {
